@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      # Loopback only; expose to the tailnet with `tailscale serve --bg 3000`.
+      # Use "3000:3000" instead if the app should be reachable directly.
+      - "127.0.0.1:3000:3000"
+    environment:
+      PORT: "3000"
+      DATA_DIR: /data
+      # APP_PASSWORD_HASH: ${APP_PASSWORD_HASH}   # only if local auth is enabled
+    volumes:
+      - app-data:/data
+
+volumes:
+  app-data:
